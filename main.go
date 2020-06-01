@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/kataras/iris"
 	"goserver-api/conf"
+	"goserver-api/logger"
 	"goserver-api/route"
 )
 
@@ -11,10 +12,14 @@ func main() {
 	flag.Parse()
 	app := newApp()
 	route.InitRouter(app)
+	//初始化日志
+	logger.InitLog(conf.Sysconfig.LoggerPath, conf.Sysconfig.LoggerLevel)
+	logger.Debug("start print logger......")
 	err := app.Run(iris.Addr(":"+conf.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
 	if err != nil {
 		panic(err)
 	}
+	logger.Info("end print logger......")
 }
 
 //noinspection GoTypesCompatibility

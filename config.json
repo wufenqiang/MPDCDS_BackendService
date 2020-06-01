@@ -4,5 +4,7 @@
   "DBPassword": "123456",
   "DBIp": "220.243.129.248",
   "DBPort": "3306",
-  "DBName": "iris_gorm_dev"
+  "DBName": "iris_gorm_dev",
+  "LoggerPath": "D:/go/hf_workspace/golang-iris-web-master/runtime/logs",
+  "LoggerLevel": "info"
 }

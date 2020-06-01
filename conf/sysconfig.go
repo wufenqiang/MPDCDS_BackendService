@@ -20,10 +20,12 @@ func init() {
 }
 
 type sysconfig struct {
-	Port       string `json:"Port"`
-	DBUserName string `json:"DBUserName"`
-	DBPassword string `json:"DBPassword"`
-	DBIp       string `json:"DBIp"`
-	DBPort     string `json:"DBPort"`
-	DBName     string `json:"DBName"`
+	Port        string `json:"Port"`
+	DBUserName  string `json:"DBUserName"`
+	DBPassword  string `json:"DBPassword"`
+	DBIp        string `json:"DBIp"`
+	DBPort      string `json:"DBPort"`
+	DBName      string `json:"DBName"`
+	LoggerPath  string `json:"LoggerPath"`
+	LoggerLevel string `json:"LoggerLevel"`
 }
