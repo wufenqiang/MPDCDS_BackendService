@@ -1,15 +1,15 @@
 package service
 
 import (
-	"goserver-api/models"
+	"goserver-api/models/bak"
 	"goserver-api/repo/mysql"
 )
 
 type BookService interface {
-	GetBookList(m map[string]interface{}) (result models.Result)
-	SaveBook(book models.Book) (result models.Result)
-	GetBook(id uint) (result models.Result)
-	DelBook(id uint) (result models.Result)
+	GetBookList(m map[string]interface{}) (result bak.Result)
+	SaveBook(book bak.Book) (result bak.Result)
+	GetBook(id uint) (result bak.Result)
+	DelBook(id uint) (result bak.Result)
 }
 
 type bookService struct{}
@@ -20,7 +20,7 @@ func NewBookService() BookService {
 
 var bookRepo = mysql.NewBookRepository()
 
-func (u bookService) GetBookList(m map[string]interface{}) (result models.Result) {
+func (u bookService) GetBookList(m map[string]interface{}) (result bak.Result) {
 	total, books := bookRepo.GetBookList(m)
 	maps := make(map[string]interface{}, 2)
 	maps["Total"] = total
@@ -30,7 +30,7 @@ func (u bookService) GetBookList(m map[string]interface{}) (result models.Result
 	result.Msg = "SUCCESS"
 	return
 }
-func (n bookService) SaveBook(book models.Book) (result models.Result) {
+func (n bookService) SaveBook(book bak.Book) (result bak.Result) {
 	err := bookRepo.SaveBook(book)
 	if err != nil {
 		result.Code = -1
@@ -41,7 +41,7 @@ func (n bookService) SaveBook(book models.Book) (result models.Result) {
 	}
 	return
 }
-func (n bookService) GetBook(id uint) (result models.Result) {
+func (n bookService) GetBook(id uint) (result bak.Result) {
 	book, err := bookRepo.GetBook(id)
 	if err != nil {
 		result.Code = -1
@@ -53,7 +53,7 @@ func (n bookService) GetBook(id uint) (result models.Result) {
 	}
 	return
 }
-func (n bookService) DelBook(id uint) (result models.Result) {
+func (n bookService) DelBook(id uint) (result bak.Result) {
 	err := bookRepo.DelBook(id)
 	if err != nil {
 		result.Code = -1

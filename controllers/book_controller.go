@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/kataras/iris"
 	"github.com/spf13/cast"
-	"goserver-api/models"
+	"goserver-api/models/bak"
 	"goserver-api/service"
 	"log"
 )
@@ -16,7 +16,7 @@ type BookController struct {
 func NewBookController() *BookController {
 	return &BookController{Service: service.NewBookService()}
 }
-func (g *BookController) PostList() (result models.Result) {
+func (g *BookController) PostList() (result bak.Result) {
 	var m map[string]interface{}
 	err := g.Ctx.ReadJSON(&m)
 	if err != nil {
@@ -44,8 +44,8 @@ func (g *BookController) PostList() (result models.Result) {
 	}
 	return g.Service.GetBookList(m)
 }
-func (g *BookController) PostSave() (result models.Result) {
-	var book models.Book
+func (g *BookController) PostSave() (result bak.Result) {
+	var book bak.Book
 	if err := g.Ctx.ReadJSON(&book); err != nil {
 		log.Println(err)
 		result.Msg = "数据错误"
@@ -53,7 +53,7 @@ func (g *BookController) PostSave() (result models.Result) {
 	}
 	return g.Service.SaveBook(book)
 }
-func (g *BookController) PostGet() (result models.Result) {
+func (g *BookController) PostGet() (result bak.Result) {
 	var m map[string]interface{}
 	err := g.Ctx.ReadJSON(&m)
 	if err != nil {
@@ -71,7 +71,7 @@ func (g *BookController) PostGet() (result models.Result) {
 	}
 	return g.Service.GetBook(cast.ToUint(m["id"]))
 }
-func (g *BookController) PostDel() (result models.Result) {
+func (g *BookController) PostDel() (result bak.Result) {
 	var m map[string]interface{}
 	err := g.Ctx.ReadJSON(&m)
 	if err != nil {

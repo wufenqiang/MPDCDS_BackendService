@@ -1,4 +1,4 @@
-package models
+package bak
 
 import "github.com/jinzhu/gorm"
 

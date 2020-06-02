@@ -1,10 +1,15 @@
 {
+
   "Port": "8848",
+
+
+  "DBIp": "220.243.129.248",
+  "DBName": "iris_gorm_dev",
   "DBUserName": "iris_gorm",
   "DBPassword": "123456",
-  "DBIp": "220.243.129.248",
   "DBPort": "3306",
-  "DBName": "iris_gorm_dev",
-  "LoggerPath": "D:/go/hf_workspace/golang-iris-web-master/runtime/logs",
+
+
+  "LoggerPath": "D:/tmp/logs/go/goserver-api/",
   "LoggerLevel": "info"
 }

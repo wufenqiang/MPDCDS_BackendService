@@ -6,7 +6,7 @@ import (
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
 	"github.com/spf13/cast"
-	"goserver-api/models"
+	"goserver-api/models/bak"
 	"time"
 )
 
@@ -36,7 +36,7 @@ func GetJWT() *jwtmiddleware.Middleware {
 }
 
 //生成token
-func GenerateToken(user models.User) string {
+func GenerateToken(user bak.User) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"nick_name": user.Username,                                            //用户信息
 		"session":   user.Session,                                             //session

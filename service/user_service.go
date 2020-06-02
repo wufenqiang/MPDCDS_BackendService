@@ -2,7 +2,7 @@ package service
 
 import (
 	"goserver-api/middleware"
-	"goserver-api/models"
+	"goserver-api/models/bak"
 	"goserver-api/repo/mysql"
 	"goserver-api/utils"
 	// "fmt"
@@ -11,8 +11,8 @@ import (
 )
 
 type UserService interface {
-	Login(m map[string]string) (result models.Result)
-	Save(user models.User) (result models.Result)
+	Login(m map[string]string) (result bak.Result)
+	Save(user bak.User) (result bak.Result)
 }
 type userServices struct {
 }
@@ -26,7 +26,7 @@ var userRepo = mysql.NewUserRepository()
 /*
 登录
 */
-func (u userServices) Login(m map[string]string) (result models.Result) {
+func (u userServices) Login(m map[string]string) (result bak.Result) {
 
 	if m["username"] == "" {
 		result.Code = -1
@@ -54,7 +54,7 @@ func (u userServices) Login(m map[string]string) (result models.Result) {
 /*
 保存
 */
-func (u userServices) Save(user models.User) (result models.Result) {
+func (u userServices) Save(user bak.User) (result bak.Result) {
 	//添加
 	if user.ID == 0 {
 		agen := userRepo.GetUserByUsername(user.Username)

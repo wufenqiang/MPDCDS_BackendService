@@ -10,10 +10,10 @@ import (
 	"time"
 )
 
-var logger *zap.Logger
+//var logger *zap.Logger
 
 // 初始化日志 logger
-func InitLog(loggerpath string, level string) {
+func InitLog(loggerpath string, level string) *zap.Logger {
 	logPath := loggerpath + "/info/"
 	errPath := loggerpath + "/error/"
 	// 设置一些基本日志格式 具体含义还比较好理解，直接看zap源码也不难懂
@@ -72,7 +72,7 @@ func InitLog(loggerpath string, level string) {
 		zapcore.NewCore(zapcore.NewConsoleEncoder(config),
 			zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout)), logLevel),
 	)
-	logger = zap.New(core, zap.AddCaller(), zap.AddStacktrace(zap.WarnLevel)) // 需要传入 zap.AddCaller() 才会显示打日志点的文件名和行数, 有点小坑
+	return zap.New(core, zap.AddCaller(), zap.AddStacktrace(zap.WarnLevel)) // 需要传入 zap.AddCaller() 才会显示打日志点的文件名和行数, 有点小坑
 }
 
 func getWriter(filename string) io.Writer {
@@ -91,23 +91,24 @@ func getWriter(filename string) io.Writer {
 	return hook
 }
 
-// logs.Debug(...)
-func Debug(format string, v ...interface{}) {
-	logger.Sugar().Debugf(format, v...)
-}
-
-func Info(format string, v ...interface{}) {
-	logger.Sugar().Infof(format, v...)
-}
-
-func Warn(format string, v ...interface{}) {
-	logger.Sugar().Warnf(format, v...)
-}
-
-func Error(format string, v ...interface{}) {
-	logger.Sugar().Errorf(format, v...)
-}
-
-func Panic(format string, v ...interface{}) {
-	logger.Sugar().Panicf(format, v...)
-}
+//
+//// logs.Debug(...)
+//func Debug(format string, v ...interface{}) {
+//	logger.Sugar().Debugf(format, v...)
+//}
+//
+//func Info(format string, v ...interface{}) {
+//	logger.Sugar().Infof(format, v...)
+//}
+//
+//func Warn(format string, v ...interface{}) {
+//	logger.Sugar().Warnf(format, v...)
+//}
+//
+//func Error(format string, v ...interface{}) {
+//	logger.Sugar().Errorf(format, v...)
+//}
+//
+//func Panic(format string, v ...interface{}) {
+//	logger.Sugar().Panicf(format, v...)
+//}

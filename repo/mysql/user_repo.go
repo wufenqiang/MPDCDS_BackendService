@@ -2,16 +2,16 @@ package mysql
 
 import (
 	"goserver-api/datasource/mysql"
-	"goserver-api/models"
+	"goserver-api/models/bak"
 	"goserver-api/utils"
 	// "github.com/spf13/cast"
 	"log"
 )
 
 type UserRepository interface {
-	GetUserByUserNameAndPwd(username string, password string) (user models.User)
-	GetUserByUsername(username string) (user models.User)
-	Save(user models.User) (int, models.User)
+	GetUserByUserNameAndPwd(username string, password string) (user bak.User)
+	GetUserByUsername(username string) (user bak.User)
+	Save(user bak.User) (int, bak.User)
 }
 
 func NewUserRepository() UserRepository {
@@ -21,24 +21,24 @@ func NewUserRepository() UserRepository {
 type userRepository struct{}
 
 //登录
-func (n userRepository) GetUserByUserNameAndPwd(username string, password string) (user models.User) {
+func (n userRepository) GetUserByUserNameAndPwd(username string, password string) (user bak.User) {
 	db := mysql.GetDB()
 	db.Where("username = ? and password = ?", username, password).First(&user)
 	return
 }
-func (n userRepository) GetUserByUsername(username string) (user models.User) {
+func (n userRepository) GetUserByUsername(username string) (user bak.User) {
 	db := mysql.GetDB()
 	db.Where("username = ?", username).First(&user)
 	return
 }
 
 //添加/修改
-func (n userRepository) Save(user models.User) (int, models.User) {
+func (n userRepository) Save(user bak.User) (int, bak.User) {
 	code := 0
 	tx := mysql.GetDB().Begin()
 	defer utils.Defer(tx, &code)
 	if user.ID != 0 {
-		var oldUser models.User
+		var oldUser bak.User
 		mysql.GetDB().First(&oldUser, user.ID)
 		user.CreatedAt = oldUser.CreatedAt
 		user.Username = oldUser.Username
