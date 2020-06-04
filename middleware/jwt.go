@@ -1,12 +1,12 @@
 package middleware
 
 import (
+	"MPDCDS_BackendService/models/bak"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
 	"github.com/spf13/cast"
-	"goserver-api/models/bak"
 	"time"
 )
 

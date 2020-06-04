@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"MPDCDS_BackendService/models/bak"
+	"MPDCDS_BackendService/service"
 	"github.com/kataras/iris"
-	"goserver-api/models/bak"
-	"goserver-api/service"
 	"log"
 )
 
@@ -16,7 +16,7 @@ func NewUserController() *UserController {
 	return &UserController{Service: service.NewUserServices()}
 }
 
-func (g *UserController) PostLogin() bak.Result {
+func (g *UserController) GetLogin() bak.Result {
 	var m map[string]string
 	err := g.Ctx.ReadJSON(&m)
 	if err != nil {
@@ -26,13 +26,13 @@ func (g *UserController) PostLogin() bak.Result {
 	return result
 }
 
-func (g *UserController) PostSave() (result bak.Result) {
-	var user bak.User
-	if err := g.Ctx.ReadJSON(&user); err != nil {
-		log.Println(err)
-		result.Msg = "数据错误"
-		return
-	}
-
-	return g.Service.Save(user)
-}
+//func (g *UserController) PostSave() (result bak.Result) {
+//	var user bak.User
+//	if err := g.Ctx.ReadJSON(&user); err != nil {
+//		log.Println(err)
+//		result.Msg = "数据错误"
+//		return
+//	}
+//
+//	return g.Service.Save(user)
+//}

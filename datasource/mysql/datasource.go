@@ -1,9 +1,9 @@
 package mysql
 
 import (
+	"MPDCDS_BackendService/conf"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"goserver-api/conf"
 	"strings"
 	"time"
 )

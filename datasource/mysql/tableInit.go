@@ -1,6 +1,6 @@
 package mysql
 
-import "goserver-api/models"
+import "MPDCDS_BackendService/models"
 
 // 初始化表 如果不存在该表 则自动创建
 func Createtable() {

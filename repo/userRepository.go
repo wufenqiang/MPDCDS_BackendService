@@ -1,9 +1,9 @@
-package mysql
+package repo
 
 import (
-	"goserver-api/datasource/mysql"
-	"goserver-api/models/bak"
-	"goserver-api/utils"
+	"MPDCDS_BackendService/datasource/mysql"
+	"MPDCDS_BackendService/models/bak"
+	"MPDCDS_BackendService/utils"
 	// "github.com/spf13/cast"
 	"log"
 )
@@ -24,6 +24,7 @@ type userRepository struct{}
 func (n userRepository) GetUserByUserNameAndPwd(username string, password string) (user bak.User) {
 	db := mysql.GetDB()
 	db.Where("username = ? and password = ?", username, password).First(&user)
+
 	return
 }
 func (n userRepository) GetUserByUsername(username string) (user bak.User) {
@@ -72,4 +73,8 @@ func (n userRepository) Save(user bak.User) (int, bak.User) {
 		code = -1
 	}
 	return code, user
+}
+
+func (n userRepository) PostLogin() bool {
+	return false
 }

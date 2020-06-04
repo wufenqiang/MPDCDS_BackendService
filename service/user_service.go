@@ -1,10 +1,10 @@
 package service
 
 import (
-	"goserver-api/middleware"
-	"goserver-api/models/bak"
-	"goserver-api/repo/mysql"
-	"goserver-api/utils"
+	"MPDCDS_BackendService/middleware"
+	"MPDCDS_BackendService/models/bak"
+	"MPDCDS_BackendService/repo"
+	"MPDCDS_BackendService/utils"
 	// "fmt"
 	// "github.com/spf13/cast"
 	// "log"
@@ -21,7 +21,7 @@ func NewUserServices() UserService {
 	return &userServices{}
 }
 
-var userRepo = mysql.NewUserRepository()
+var userRepo = repo.NewUserRepository()
 
 /*
 登录

@@ -1,12 +1,12 @@
 package main
 
 import (
+	"MPDCDS_BackendService/conf"
+	thelogger "MPDCDS_BackendService/logger"
+	"MPDCDS_BackendService/route"
 	"flag"
 	"github.com/kataras/iris"
 	"go.uber.org/zap"
-	"goserver-api/conf"
-	thelogger "goserver-api/logger"
-	"goserver-api/route"
 )
 
 var logger *zap.Logger

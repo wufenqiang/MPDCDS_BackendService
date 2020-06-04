@@ -1,4 +1,4 @@
-module goserver-api
+module MPDCDS_BackendService
 
 go 1.14
 
