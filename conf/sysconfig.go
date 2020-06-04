@@ -33,4 +33,7 @@ type sysconfig struct {
 	//日志存储地址
 	LoggerPath  string `json:"LoggerPath"`
 	LoggerLevel string `json:"LoggerLevel"`
+
+	//thrift 服务ip:port
+	NetworkAddr string `json:"NetworkAddr"`
 }
