@@ -11,6 +11,10 @@ import (
 var esclient *elastic.Client
 var host = "http://elastic:weather.com.cn@220.243.130.220:9200"
 
+func GetESClient() *elastic.Client {
+	return esclient
+}
+
 func init() {
 	errorlog := log.New(os.Stdout, "APP", log.LstdFlags)
 	var err error

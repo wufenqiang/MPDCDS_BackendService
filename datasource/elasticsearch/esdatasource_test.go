@@ -1,6 +1,7 @@
 package esdatasource_test
 
 import (
+	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
 	"context"
 	"fmt"
 	"github.com/olivere/elastic/v7"
@@ -16,6 +17,10 @@ type Employee struct {
 	Age       int      `json:"age"`
 	About     string   `json:"about"`
 	Interests []string `json:"interests"`
+}
+
+func init() {
+	esclient = esdatasource.GetESClient()
 }
 
 func TestCreate(t *testing.T) {
