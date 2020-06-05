@@ -36,4 +36,6 @@ type sysconfig struct {
 
 	//thrift 服务ip:port
 	NetworkAddr string `json:"NetworkAddr"`
+
+	ESURL string `json:"ESURL"`
 }

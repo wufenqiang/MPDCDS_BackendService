@@ -23,6 +23,52 @@ func init() {
 	esclient = esdatasource.GetESClient()
 }
 
+//校验Index是否存在
+func TestIndexExists(t *testing.T) {
+	index := "Hf_platform_log"
+	exists, err := esclient.IndexExists(index).Do(context.Background())
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	fmt.Printf("index %s exists %v", index, exists)
+}
+
+//创建Index
+func TestIndexCreate(t *testing.T) {
+	index := "orderinfo"
+	result, err := esclient.CreateIndex(index).Do(context.Background())
+
+	/*var mapping = `{
+			"settings":{
+				"number_of_shards": 3,
+				"number_of_replicas": 1
+			},
+			"mappings":{
+				"hf_platform_log":{
+					"properties":{
+						"username":{
+							"type":"keyword"
+						},
+						"operate":{
+							"type":"keyword"
+						},
+						"catalog":{
+							"type":"keyword"
+						},
+						"createtime":{
+							"type":"date"
+						}
+					}
+				}
+			}
+		}`
+	result, err := esclient.CreateIndex(index).BodyString(mapping).Do(context.Background())*/
+	if err != nil {
+		fmt.Printf("create index failed, err: %v\n", err)
+	}
+	fmt.Println("create index success", result.Acknowledged)
+}
+
 func TestCreate(t *testing.T) {
 	//使用结构体
 	e1 := Employee{"Jane", "Smith", 32, "I like to collect rock albums", []string{"music"}}
