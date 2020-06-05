@@ -4,6 +4,7 @@ import (
 	"MPDCDS_BackendService/conf"
 	thelogger "MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/route"
+	"MPDCDS_BackendService/thrift/server"
 	"flag"
 	"github.com/kataras/iris"
 	"go.uber.org/zap"
@@ -18,6 +19,9 @@ func main() {
 	//初始化日志
 	logger = thelogger.InitLog(conf.Sysconfig.LoggerPath, conf.Sysconfig.LoggerLevel)
 	logger.Info("start print logger......")
+
+	//启动 thrift server
+	server.InitMpdcdsBackendServiceServer()
 
 	err := app.Run(iris.Addr(":"+conf.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
 	if err != nil {

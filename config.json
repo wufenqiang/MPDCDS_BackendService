@@ -11,5 +11,7 @@
 
 
   "LoggerPath": "D:/tmp/logs/go/goserver-api/",
-  "LoggerLevel": "info"
+  "LoggerLevel": "info",
+
+  "NetworkAddr":"127.0.0.1:19090"
 }
