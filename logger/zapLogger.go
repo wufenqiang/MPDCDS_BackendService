@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"MPDCDS_BackendService/conf"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -10,7 +11,7 @@ import (
 	"time"
 )
 
-//var logger *zap.Logger
+var zapLogger *zap.Logger
 
 // 初始化日志 logger
 func InitLog(loggerpath string, level string) *zap.Logger {
@@ -91,24 +92,13 @@ func getWriter(filename string) io.Writer {
 	return hook
 }
 
-//
-//// logs.Debug(...)
-//func Debug(format string, v ...interface{}) {
-//	logger.Sugar().Debugf(format, v...)
-//}
-//
-//func Info(format string, v ...interface{}) {
-//	logger.Sugar().Infof(format, v...)
-//}
-//
-//func Warn(format string, v ...interface{}) {
-//	logger.Sugar().Warnf(format, v...)
-//}
-//
-//func Error(format string, v ...interface{}) {
-//	logger.Sugar().Errorf(format, v...)
-//}
-//
-//func Panic(format string, v ...interface{}) {
-//	logger.Sugar().Panicf(format, v...)
-//}
+//初始化
+func init() {
+	logger := InitLog(conf.Sysconfig.LoggerPath, conf.Sysconfig.LoggerLevel)
+	zapLogger = logger
+}
+
+//获取zap logger 对象
+func GetLogger() *zap.Logger {
+	return zapLogger
+}

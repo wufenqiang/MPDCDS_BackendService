@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"MPDCDS_BackendService/conf"
+	"MPDCDS_BackendService/logger"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"strings"
@@ -28,5 +29,6 @@ func init() {
 	db.SingularTable(true)        //表生成结尾不带s
 	// 启用Logger，显示详细日志
 	db.LogMode(true)
-	Createtable()
+	logger.GetLogger().Info("DB初始化完成！")
+	//Createtable()
 }

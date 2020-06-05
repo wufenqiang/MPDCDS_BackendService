@@ -2,6 +2,7 @@ package server
 
 import (
 	"MPDCDS_BackendService/conf"
+	"MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/thrift/MPDCDS_BackendService"
 	"MPDCDS_BackendService/utils"
 	"context"
@@ -32,7 +33,7 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	//合法
 	if isValid {
 		//todo 根据用户信息、当前目录从es中查询数据目录和数据列表
-		fmt.Print("用户id:" + m["id"] + "=========用户名称" + m["username"])
+		logger.GetLogger().Info("用户id:" + m["id"] + "=========用户名称" + m["username"])
 	}
 	return
 }
@@ -50,6 +51,7 @@ func InitMpdcdsBackendServiceServer() {
 
 	serverTransport, err := thrift.NewTServerSocket(conf.Sysconfig.NetworkAddr)
 	fmt.Println("thrift server start.......")
+	logger.GetLogger().Info("thrift server start.......")
 	if err != nil {
 		fmt.Println("Error!", err)
 	}

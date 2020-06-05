@@ -2,24 +2,19 @@ package main
 
 import (
 	"MPDCDS_BackendService/conf"
-	thelogger "MPDCDS_BackendService/logger"
+	"MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/route"
 	"MPDCDS_BackendService/thrift/server"
 	"flag"
 	"github.com/kataras/iris"
-	"go.uber.org/zap"
 )
-
-var logger *zap.Logger
 
 func main() {
 	flag.Parse()
 	app := newApp()
 	route.InitRouter(app)
 	//初始化日志
-	logger = thelogger.InitLog(conf.Sysconfig.LoggerPath, conf.Sysconfig.LoggerLevel)
-	logger.Info("start print logger......")
-
+	logger.GetLogger().Info("start print logger......")
 	//启动 thrift server
 	server.InitMpdcdsBackendServiceServer()
 
@@ -27,7 +22,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	logger.Info("end print logger......")
+	logger.GetLogger().Info("end print logger......")
 }
 
 //noinspection GoTypesCompatibility
