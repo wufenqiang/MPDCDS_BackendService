@@ -5,8 +5,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/olivere/elastic/v7"
+	"github.com/satori/go.uuid"
 	"reflect"
 	"testing"
+	"time"
 )
 
 var esclient *elastic.Client
@@ -40,7 +42,7 @@ func TestIndexCreate(t *testing.T) {
 
 	/*var mapping = `{
 			"settings":{
-				"number_of_shards": 3,
+				"number_of_shards": 15,
 				"number_of_replicas": 1
 			},
 			"mappings":{
@@ -67,6 +69,36 @@ func TestIndexCreate(t *testing.T) {
 		fmt.Printf("create index failed, err: %v\n", err)
 	}
 	fmt.Println("create index success", result.Acknowledged)
+}
+
+type Person struct {
+	UserName   string    `json:"user_name"`
+	Password   string    `json:"password"`
+	Age        int       `json:"age"`
+	CreateTime time.Time `json:"create_time"`
+	ArrayTest  []string  `json:"array_test"`
+	SonList    []Son     `json:"son_list"`
+	Remark     string    `json:"remark"`
+}
+type Son struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+func TestCreateWithStruct(t *testing.T) {
+	son1 := Son{"xiaoming", 11}
+	son2 := Son{"xiaoxiao", 12}
+	//使用结构体
+	e1 := Person{"zhangsan", "123456", 20, time.Now(), []string{"A", "B"}, []Son{son1, son2}, "this is a remark"}
+	put1, err := esclient.Index().
+		Index("test_person").
+		Id(uuid.NewV4().String()).
+		BodyJson(e1).
+		Do(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Indexed tweet %s to index s%s, type %s\n", put1.Id, put1.Index, put1.Type)
 }
 
 func TestCreate(t *testing.T) {

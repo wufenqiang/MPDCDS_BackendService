@@ -30,6 +30,7 @@ require (
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/olivere/elastic/v7 v7.0.16
 	github.com/onsi/ginkgo v1.12.3 // indirect
+	github.com/satori/go.uuid v1.2.0
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
