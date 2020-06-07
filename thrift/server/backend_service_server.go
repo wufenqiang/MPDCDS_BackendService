@@ -27,7 +27,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 	if err != nil {
 		r.Status = -1
 		r.Msg = "根据用户名和密码查询用户信息失败！"
-		logger.GetLogger().Error("根据用户名和密码查询hf_platform_user失败，异常信息" + err.Error())
+		logger.GetLogger().Error("根据用户名和密码查询web_user失败，异常信息" + err.Error())
 		return
 	}
 	if res.Hits.TotalHits.Value > 0 {
@@ -40,7 +40,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 				logger.GetLogger().Error("数据格式化失败！")
 			}
 			t.Id = hit.Id
-			logger.GetLogger().Info("Hf_platform_user", zap.String("Id", hit.Id))
+			logger.GetLogger().Info("web_user", zap.String("Id", hit.Id))
 			break
 		}
 		//用户名和userId合法,使用jwt生成token,userId为es中查询的用户信息主键
