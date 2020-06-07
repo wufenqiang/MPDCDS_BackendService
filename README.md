@@ -31,3 +31,12 @@ main.go 主程序入口
 
 #### 前端
 https://github.com/pppercyWang/lib-ui
+
+ES访问地址：http://220.243.130.220:9200/
+用户名：elastic
+密码：weather.com.cn
+
+
+Kibana访问地址：http://220.243.130.220:5601
+用户名：elastic
+密码：weather.com.cn
