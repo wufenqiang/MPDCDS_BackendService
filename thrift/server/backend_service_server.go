@@ -23,7 +23,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 	esclient := esdatasource.GetESClient()
 	u := elastic.NewQueryStringQuery(user)     //"username:hfcmjt"
 	p := elastic.NewQueryStringQuery(password) //"password:123456789"
-	res, err := esclient.Search("hf_platform_user").Query(u).Query(p).Do(context.Background())
+	res, err := esclient.Search("web_user").Query(u).Query(p).Do(context.Background())
 	if err != nil {
 		r.Status = -1
 		r.Msg = "根据用户名和密码查询用户信息失败！"
@@ -31,7 +31,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 		return
 	}
 	if res.Hits.TotalHits.Value > 0 {
-		var t models.Hf_platform_user
+		var t models.WebUser
 		for _, hit := range res.Hits.Hits {
 			err := json.Unmarshal(hit.Source, &t) //另外一种取数据的方法
 			if err != nil {
