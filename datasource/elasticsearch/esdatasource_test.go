@@ -1,7 +1,7 @@
 package esdatasource_test
 
 import (
-	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
+	"MPDCDS_BackendService/datasource/elasticsearch"
 	"MPDCDS_BackendService/utils"
 	"context"
 	"fmt"
