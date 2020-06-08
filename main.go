@@ -16,7 +16,7 @@ func main() {
 	//初始化日志
 	logger.GetLogger().Info("start print logger......")
 	//启动 thrift server
-	server.InitMpdcdsBackendServiceServer()
+	go server.InitMpdcdsBackendServiceServer()
 
 	err := app.Run(iris.Addr(":"+conf.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
 	if err != nil {
