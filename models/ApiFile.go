@@ -9,4 +9,5 @@ type ApiFile struct {
 	//AccessId   string    `json:"access_id"`   //接入数据信息表主键
 	FileSize   int64     `json:"file_size"`   //文件大小（字节）
 	CreateTime time.Time `json:"create_time"` //创建时间
+	DirId      string    `json:"dir_id"`      //根据最小目录地址生成唯一标识
 }
