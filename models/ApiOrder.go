@@ -18,6 +18,5 @@ type ApiOrder struct {
 	Status        string    `json:"status"`         //审批状态（1待审批、2审批中、3审批完成、4审批不通过）
 	Duration      int       `json:"duration"`       //数据时长
 	InstanceId    string    `json:"instance_id"`    //流程ID
-	AccessId      string    `json:"access_id"`      //接入数据基本信息表主键
 	UserId        string    `json:"user_id"`        //用户信息表主键
 }
