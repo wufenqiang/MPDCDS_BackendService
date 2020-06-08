@@ -19,4 +19,5 @@ type ApiOrder struct {
 	Duration      int       `json:"duration"`       //数据时长
 	InstanceId    string    `json:"instance_id"`    //流程ID
 	AccessId      string    `json:"access_id"`      //接入数据基本信息表主键
+	UserId        string    `json:"user_id"`        //用户信息表主键
 }
