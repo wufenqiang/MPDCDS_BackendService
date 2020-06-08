@@ -24,5 +24,4 @@ type ApiDataInfo struct {
 	LinkMan        string    `json:"link_man"`        //联系人
 	AccessStatus   string    `json:"access_status"`   //上游数据接入状态（1未接入、2试运行、3已稳定   判断上游接入数据是否稳定）
 	DataLevel      string    `json:"DataLevel"`       //数据级别（1 2 3   3级不需要审批）
-	FileIndexName  string    `json:"file_index_name"` //文件索引名称
 }

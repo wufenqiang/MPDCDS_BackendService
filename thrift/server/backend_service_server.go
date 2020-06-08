@@ -5,6 +5,7 @@ import (
 	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
 	"MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/models"
+	"MPDCDS_BackendService/service"
 	"MPDCDS_BackendService/thrift/MPDCDS_BackendService"
 	"MPDCDS_BackendService/utils"
 	"context"
@@ -70,6 +71,9 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 		//todo 根据用户信息、当前目录从es中查询数据目录和数据列表
 		logger.GetLogger().Info("用户id:" + m["id"] + "=========用户名称" + m["username"])
 	}
+
+	fileService := service.NewApiFileService()
+	fileService.GetFileByPath(pwd)
 	return
 }
 
