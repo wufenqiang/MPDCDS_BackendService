@@ -1,10 +1,8 @@
 package mysql
 
-import "MPDCDS_BackendService/models"
-
 // 初始化表 如果不存在该表 则自动创建
 func Createtable() {
-	GetDB().AutoMigrate(
+	/*	GetDB().AutoMigrate(
 		//&models.User{},
 		//&models.Book{},
 		&models.Access_data_info{},
@@ -22,5 +20,5 @@ func Createtable() {
 		&models.Hf_platform_userrole{},
 		&models.Method_dict{},
 		&models.Orderinfo{},
-	)
+	)*/
 }

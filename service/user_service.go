@@ -13,7 +13,6 @@ import (
 type UserService interface {
 	Login(m map[string]string) (result bak.Result)
 	Save(user bak.User) (result bak.Result)
-	GetUserByName(username string) (result bak.Result)
 }
 type userServices struct {
 }
@@ -72,13 +71,5 @@ func (u userServices) Save(user bak.User) (result bak.Result) {
 	}
 	result.Code = 0
 	result.Data = p
-	return
-}
-
-func (u userServices) GetUserByName(username string) (result bak.Result) {
-	user := userRepo.GetUserByName(username)
-
-	result.Code = 0
-	result.Data = user
 	return
 }

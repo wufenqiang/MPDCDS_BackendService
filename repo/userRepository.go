@@ -1,17 +1,9 @@
 package repo
 
 import (
-	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
 	"MPDCDS_BackendService/datasource/mysql"
-	"MPDCDS_BackendService/logger"
-	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/models/bak"
 	"MPDCDS_BackendService/utils"
-	"context"
-	"github.com/olivere/elastic/v7"
-	"reflect"
-
-	// "github.com/spf13/cast"
 	"log"
 )
 
@@ -19,7 +11,6 @@ type UserRepository interface {
 	GetUserByUserNameAndPwd(username string, password string) (user bak.User)
 	GetUserByUsername(username string) (user bak.User)
 	Save(user bak.User) (int, bak.User)
-	GetUserByName(username string) (user models.Hf_platform_user)
 }
 
 func NewUserRepository() UserRepository {
@@ -85,25 +76,4 @@ func (n userRepository) Save(user bak.User) (int, bak.User) {
 
 func (n userRepository) PostLogin() bool {
 	return false
-}
-
-func (n userRepository) GetUserByName(userName string) models.Hf_platform_user {
-	esClient := esdatasource.GetESClient()
-
-	q := elastic.NewQueryStringQuery("Username:" + userName)
-	res, err := esClient.Search("hf_platform_user").
-		Size(1).
-		From(0).
-		Query(q).Do(context.Background())
-
-	if err != nil {
-		logger.GetLogger().Error("GetUserByName")
-	}
-
-	var user models.Hf_platform_user
-	for _, item := range res.Each(reflect.TypeOf(user)) { //从搜索结果中取数据的方法
-		user = item.(models.Hf_platform_user)
-	}
-
-	return user
 }
