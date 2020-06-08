@@ -24,7 +24,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 	esclient := esdatasource.GetESClient()
 	u := elastic.NewQueryStringQuery(user)     //"username:hfcmjt"
 	p := elastic.NewQueryStringQuery(password) //"password:123456789"
-	res, err := esclient.Search("web_user").Query(u).Query(p).Do(context.Background())
+	res, err := esclient.Search(utils.UnMarshal(models.WebUser{})).Query(u).Query(p).Do(context.Background())
 	if err != nil {
 		r.Status = -1
 		r.Msg = "根据用户名和密码查询用户信息失败！"
