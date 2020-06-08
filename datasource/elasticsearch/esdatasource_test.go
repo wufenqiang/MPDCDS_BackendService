@@ -4,6 +4,7 @@ import (
 	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
 	"context"
 	"fmt"
+	//uuid "github.com/iris-contrib/go.uuid"
 	"github.com/olivere/elastic/v7"
 	"github.com/satori/go.uuid"
 	"reflect"
@@ -68,6 +69,7 @@ func TestIndexCreate(t *testing.T) {
 	if err != nil {
 		fmt.Printf("create index failed, err: %v\n", err)
 	}
+
 	fmt.Println("create index success", result.Acknowledged)
 }
 
