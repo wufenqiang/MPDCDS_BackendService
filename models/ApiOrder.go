@@ -4,7 +4,7 @@ import "time"
 
 //订单信息表
 type ApiOrder struct {
-	Id            string    `json:"id"`             //系统ID
+	//Id            string    `json:"id"`             //系统ID
 	OrderNum      string    `json:"order_num"`      //订单号
 	MethodId      string    `json:"method_id"`      //数据获取方式编码
 	CreateTime    time.Time `json:"create_time"`    //创建时间
@@ -19,4 +19,5 @@ type ApiOrder struct {
 	Duration      int       `json:"duration"`       //数据时长
 	InstanceId    string    `json:"instance_id"`    //流程ID
 	AccessId      string    `json:"access_id"`      //接入数据基本信息表主键
+	UserId        string    `json:"user_id"`        //用户信息表主键
 }

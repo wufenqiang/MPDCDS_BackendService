@@ -3,7 +3,6 @@ package service
 import (
 	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/repo"
-	"fmt"
 )
 
 type ApiFileService interface {
@@ -25,7 +24,7 @@ var (
 func (a apiFileService) GetFileByPath(dirPath string) []models.ApiFile {
 
 	apiDirectory := apiDirectoryRepository.GetDirByPath(dirPath)
-	apiFiles := apiFileRepository.GetFileByDirId(apiDirectory.DataId, "")
-	fmt.Println(apiFiles)
+	apiFiles := apiFileRepository.GetFileByDirId(apiDirectory.Id, "")
+	//fmt.Println(apiFiles)
 	return apiFiles
 }
