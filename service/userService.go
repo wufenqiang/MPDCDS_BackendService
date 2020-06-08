@@ -2,6 +2,7 @@ package service
 
 import (
 	"MPDCDS_BackendService/middleware"
+	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/models/bak"
 	"MPDCDS_BackendService/repo"
 	"MPDCDS_BackendService/utils"
@@ -11,8 +12,8 @@ import (
 )
 
 type UserService interface {
-	Login(m map[string]string) (result bak.Result)
-	Save(user bak.User) (result bak.Result)
+	Login(m map[string]string) (result models.Result)
+	Save(user bak.User) (result models.Result)
 }
 type userServices struct {
 }
@@ -26,7 +27,7 @@ var userRepo = repo.NewUserRepository()
 /*
 登录
 */
-func (u userServices) Login(m map[string]string) (result bak.Result) {
+func (u userServices) Login(m map[string]string) (result models.Result) {
 
 	if m["username"] == "" {
 		result.Code = -1
@@ -54,7 +55,7 @@ func (u userServices) Login(m map[string]string) (result bak.Result) {
 /*
 保存
 */
-func (u userServices) Save(user bak.User) (result bak.Result) {
+func (u userServices) Save(user bak.User) (result models.Result) {
 	//添加
 	if user.ID == 0 {
 		agen := userRepo.GetUserByUsername(user.Username)
@@ -73,3 +74,7 @@ func (u userServices) Save(user bak.User) (result bak.Result) {
 	result.Data = p
 	return
 }
+
+//func (u userServices) Login() {
+//
+//}

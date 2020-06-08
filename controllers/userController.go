@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"MPDCDS_BackendService/models/bak"
+	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/service"
 	"github.com/kataras/iris"
 	"log"
@@ -16,7 +16,7 @@ func NewUserController() *UserController {
 	return &UserController{Service: service.NewUserServices()}
 }
 
-func (g *UserController) GetLogin() bak.Result {
+func (g *UserController) GetLogin() models.Result {
 	var m map[string]string
 	err := g.Ctx.ReadJSON(&m)
 	if err != nil {
