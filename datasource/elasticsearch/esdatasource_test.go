@@ -1,12 +1,12 @@
 package esdatasource_test
 
 import (
-	"MPDCDS_BackendService/datasource/elasticsearch"
-	"MPDCDS_BackendService/utils"
+	esdatasource "MPDCDS_BackendService/datasource/elasticsearch"
 	"context"
 	"fmt"
 	//uuid "github.com/iris-contrib/go.uuid"
 	"github.com/olivere/elastic/v7"
+	"github.com/satori/go.uuid"
 	"reflect"
 	"testing"
 	"time"
@@ -94,7 +94,7 @@ func TestCreateWithStruct(t *testing.T) {
 	e1 := Person{"zhangsan", "123456", 20, time.Now(), []string{"A", "B"}, []Son{son1, son2}, "this is a remark"}
 	put1, err := esclient.Index().
 		Index("test_person").
-		Id(utils.Uuid()).
+		Id(uuid.NewV4().String()).
 		BodyJson(e1).
 		Do(context.Background())
 	if err != nil {
