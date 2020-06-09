@@ -40,7 +40,8 @@ type sysconfig struct {
 	LoggerLevel string `json:"LoggerLevel"`
 
 	//thrift 服务ip:port
-	NetworkAddr string `json:"NetworkAddr"`
+	ThriftHost string `json:"ThriftHost"`
+	ThriftPort string `json:"ThriftPort"`
 
 	ESURL string `json:"ESURL"`
 }

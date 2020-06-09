@@ -77,8 +77,8 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	return
 }
 
-func (this *MPDCDS_BackendServiceImpl) File(ctx context.Context, pwd string, path string) (r *MPDCDS_BackendService.FileInfo, err error) {
-	//todo 根据当前目录和文件名称查询文件真实地址
+func (this *MPDCDS_BackendServiceImpl) VerifyDir(ctx context.Context, token string, abspath string) (r bool, err error) {
+	//todo 判断当前用户是否有权限访问该目录
 
 	return
 }
@@ -88,7 +88,7 @@ func InitMpdcdsBackendServiceServer() {
 	transportFactory := thrift.NewTFramedTransportFactory(thrift.NewTTransportFactory())
 	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
 
-	serverTransport, err := thrift.NewTServerSocket(conf.Sysconfig.NetworkAddr)
+	serverTransport, err := thrift.NewTServerSocket(conf.Sysconfig.ThriftHost + ":" + conf.Sysconfig.ThriftPort)
 
 	logger.GetLogger().Info("thrift server start.......")
 	if err != nil {
@@ -97,6 +97,7 @@ func InitMpdcdsBackendServiceServer() {
 	handler := &MPDCDS_BackendServiceImpl{}
 	processor := MPDCDS_BackendService.NewMPDCDS_BackendServiceProcessor(handler)
 	server := thrift.NewTSimpleServer4(processor, serverTransport, transportFactory, protocolFactory)
-	logger.GetLogger().Info("thrift server in " + conf.Sysconfig.NetworkAddr)
+	serverTransport.Addr().String()
+	logger.GetLogger().Info("thrift server in " + conf.Sysconfig.ThriftHost + ":" + conf.Sysconfig.ThriftPort)
 	server.Serve()
 }
