@@ -3,7 +3,6 @@ package service
 import (
 	"MPDCDS_BackendService/repo"
 	"MPDCDS_BackendService/utils"
-	"fmt"
 	"strconv"
 )
 
@@ -30,7 +29,6 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 
 	//根据UserId获取该用户已被授权并且有效的订单
 	apiOrders := apiOrderRepository.GetOrderByUserId(userId)
-	fmt.Println("apiOrders", apiOrders)
 
 	var orderIds []interface{}
 	for _, e := range apiOrders {
@@ -39,11 +37,9 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 
 	//根据订单ID获取数据类型ID
 	accessIds := apiDataOrderShipRepository.GetDataOrderShipListByOrderId(orderIds)
-	fmt.Println("accessIds", accessIds)
 
 	//根据ID获取数据类型
 	apiDataInfos := apiDataInfoRepository.GetApiDataInfoById(accessIds)
-	fmt.Println("apiDataInfos", apiDataInfos)
 
 	//如果目前为"/"则直接返回用户订阅的数据类型的编码作为一级目录
 	if dirPath == "/" {

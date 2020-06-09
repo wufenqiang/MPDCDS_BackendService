@@ -67,16 +67,24 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	//验证token是否有效
 	m := make(map[string]string)
 	isValid, err := utils.VerifyToken(m, token)
+
 	//合法
+	userIdLog := zap.String("userId", m["id"])
+	userNameLog := zap.String("username", m["username"])
+	accessPathLog := zap.String("accessPath", pwd)
 	if isValid {
-		//todo 根据用户信息、当前目录从es中查询数据目录和数据列表
-		logger.GetLogger().Info("用户id:" + m["id"] + "=========用户名称" + m["username"])
+		logger.GetLogger().Info("user access", userIdLog, userNameLog, accessPathLog)
+	} else {
+		r.Status = -1
+		r.Msg = "User authentication failed"
+		logger.GetLogger().Error("User authentication failed", userIdLog, userNameLog, accessPathLog)
+		return
 	}
 
 	fileService := service.NewApiFileService()
 	r.Status = 0
 	r.Data = fileService.GetFileByPath(m["id"], pwd)
-	r.Msg = "get file info success"
+	r.Msg = "Get list information succeeded"
 	return
 }
 

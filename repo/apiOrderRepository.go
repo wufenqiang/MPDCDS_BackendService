@@ -23,13 +23,15 @@ func NewApiOrderRepository() ApiOrderRepository {
 
 type apiOrderRepository struct{}
 
-func (a apiOrderRepository) GetOrderByUserId(userId string) []models.ApiOrder {
+func (a apiOrderRepository) GetOrderByUserId(userId string) (r []models.ApiOrder) {
+	if userId == "" {
+		return
+	}
+
 	esClient := esdatasource.GetESClient()
 
 	boolQ := elastic.NewBoolQuery()
-	if userId != "" {
-		boolQ.Must(elastic.NewQueryStringQuery("user_id:" + userId))
-	}
+	boolQ.Must(elastic.NewQueryStringQuery("user_id:" + userId))
 	boolQ.Must(elastic.NewQueryStringQuery("status:3"))
 	boolQ.Must(elastic.NewRangeQuery("end_time").Gt(time.Now().Unix()))
 
@@ -40,19 +42,19 @@ func (a apiOrderRepository) GetOrderByUserId(userId string) []models.ApiOrder {
 
 	if err != nil {
 		logger.GetLogger().Error("GetDirByPath", zap.Error(err))
+		return
 	}
 
 	if res == nil {
-		return []models.ApiOrder{}
+		return
 	}
 
-	var apiOrders []models.ApiOrder
 	for _, item := range res.Hits.Hits {
 		var apiOrder models.ApiOrder
 		data, _ := item.Source.MarshalJSON()
 		json.Unmarshal(data, &apiOrder)
 		apiOrder.Id = item.Id
-		apiOrders = append(apiOrders, apiOrder)
+		r = append(r, apiOrder)
 	}
-	return apiOrders
+	return
 }
