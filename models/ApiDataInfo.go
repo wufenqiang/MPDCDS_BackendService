@@ -4,7 +4,7 @@ import "time"
 
 //接入数据信息表
 type ApiDataInfo struct {
-	Id             string    `json:"id"`              //系统ID
+	Id             string    `json:"-"`               //系统ID
 	DataName       string    `json:"data_name"`       //数据类型名称
 	DataCode       string    `json:"data_code"`       //数据编码
 	ServerAddress  string    `json:"server_address"`  //服务器地址
