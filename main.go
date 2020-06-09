@@ -1,7 +1,6 @@
 package main
 
 import (
-	"MPDCDS_BackendService/conf"
 	"MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/thrift/server"
 	"flag"
@@ -10,18 +9,18 @@ import (
 
 func main() {
 	flag.Parse()
-	app := newApp()
+	//app := newApp()
 	//route.InitRouter(app)
 	//初始化日志
-	logger.GetLogger().Info("start print logger......")
+	logger.GetLogger().Info("start ...")
 	//启动 thrift server
-	go server.InitMpdcdsBackendServiceServer()
+	server.InitMpdcdsBackendServiceServer()
 
-	err := app.Run(iris.Addr(":"+conf.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
-	if err != nil {
-		panic(err)
-	}
-	logger.GetLogger().Info("end print logger......")
+	//err := app.Run(iris.Addr(":"+conf.Sysconfig.Port), iris.WithoutServerError(iris.ErrServerClosed))
+	//if err != nil {
+	//	panic(err)
+	//}
+	//logger.GetLogger().Info("end print logger......")
 }
 
 //noinspection GoTypesCompatibility
