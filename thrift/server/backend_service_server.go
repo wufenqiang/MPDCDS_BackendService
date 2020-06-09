@@ -88,7 +88,7 @@ func InitMpdcdsBackendServiceServer() {
 	transportFactory := thrift.NewTFramedTransportFactory(thrift.NewTTransportFactory())
 	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
 
-	serverTransport, err := thrift.NewTServerSocket(conf.Sysconfig.NetworkAddr + ":" + conf.Sysconfig.ThriftPort)
+	serverTransport, err := thrift.NewTServerSocket(conf.Sysconfig.ThriftHost + ":" + conf.Sysconfig.ThriftPort)
 
 	logger.GetLogger().Info("thrift server start.......")
 	if err != nil {
@@ -98,6 +98,6 @@ func InitMpdcdsBackendServiceServer() {
 	processor := MPDCDS_BackendService.NewMPDCDS_BackendServiceProcessor(handler)
 	server := thrift.NewTSimpleServer4(processor, serverTransport, transportFactory, protocolFactory)
 	serverTransport.Addr().String()
-	logger.GetLogger().Info("thrift server in " + conf.Sysconfig.NetworkAddr + ":" + conf.Sysconfig.ThriftPort)
+	logger.GetLogger().Info("thrift server in " + conf.Sysconfig.ThriftHost + ":" + conf.Sysconfig.ThriftPort)
 	server.Serve()
 }

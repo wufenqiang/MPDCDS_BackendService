@@ -6,7 +6,7 @@
   "LoggerPath": "D:/tmp/logs/go/goserver-api/",
   "LoggerLevel": "info",
 
-  "NetworkAddr":"127.0.0.1",
+  "ThriftHost":"127.0.0.1",
   "ThriftPort": "19090",
 
 
