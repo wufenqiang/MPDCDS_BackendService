@@ -23,6 +23,11 @@ type sysconfig struct {
 	//端口
 	Port string `json:"Port"`
 
+	//  "DBIp": "220.243.129.248",
+	//  "DBName": "iris_gorm_dev",
+	//  "DBUserName": "iris_gorm",
+	//  "DBPassword": "123456",
+	//  "DBPort": "3306",
 	//mysql信息
 	//DBUserName string `json:"DBUserName"`
 	//DBPassword string `json:"DBPassword"`
