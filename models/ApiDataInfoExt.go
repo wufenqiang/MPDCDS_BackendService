@@ -4,7 +4,7 @@ import "time"
 
 //接入基本数据信息扩展表
 type ApiDataInfoExt struct {
-	Id         string    `json:"id"`          //系统ID
+	Id         string    `json:"-"`           //系统ID
 	FieldName  string    `json:"field_name"`  //字段名称
 	FieldValue string    `json:"field_value"` //字段值
 	FieldType  string    `json:"field_type"`  //字段类型

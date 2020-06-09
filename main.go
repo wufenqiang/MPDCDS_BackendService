@@ -3,7 +3,6 @@ package main
 import (
 	"MPDCDS_BackendService/conf"
 	"MPDCDS_BackendService/logger"
-	"MPDCDS_BackendService/route"
 	"MPDCDS_BackendService/thrift/server"
 	"flag"
 	"github.com/kataras/iris"
@@ -12,7 +11,7 @@ import (
 func main() {
 	flag.Parse()
 	app := newApp()
-	route.InitRouter(app)
+	//route.InitRouter(app)
 	//初始化日志
 	logger.GetLogger().Info("start print logger......")
 	//启动 thrift server
