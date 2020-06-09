@@ -24,11 +24,11 @@ type sysconfig struct {
 	Port string `json:"Port"`
 
 	//mysql信息
-	DBUserName string `json:"DBUserName"`
-	DBPassword string `json:"DBPassword"`
-	DBIp       string `json:"DBIp"`
-	DBPort     string `json:"DBPort"`
-	DBName     string `json:"DBName"`
+	//DBUserName string `json:"DBUserName"`
+	//DBPassword string `json:"DBPassword"`
+	//DBIp       string `json:"DBIp"`
+	//DBPort     string `json:"DBPort"`
+	//DBName     string `json:"DBName"`
 
 	//日志存储地址
 	LoggerPath  string `json:"LoggerPath"`
