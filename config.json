@@ -3,11 +3,7 @@
   "Port": "8848",
 
 
-//  "DBIp": "220.243.129.248",
-//  "DBName": "iris_gorm_dev",
-//  "DBUserName": "iris_gorm",
-//  "DBPassword": "123456",
-//  "DBPort": "3306",
+
 
 
   "LoggerPath": "D:/tmp/logs/go/goserver-api/",
