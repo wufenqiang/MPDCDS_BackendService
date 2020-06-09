@@ -80,7 +80,7 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 func (this *MPDCDS_BackendServiceImpl) VerifyDir(ctx context.Context, token string, abspath string) (r bool, err error) {
 	//todo 判断当前用户是否有权限访问该目录
 
-	return
+	return true, nil
 }
 
 //启动thrift server服务
