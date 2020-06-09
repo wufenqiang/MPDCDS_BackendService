@@ -49,9 +49,10 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 	if dirPath == "/" {
 		for _, e := range apiDataInfos {
 			var tmpMap map[string]string
+			tmpMap = make(map[string]string)
 			tmpMap["Size"] = "0"
 			tmpMap["Type"] = "dir"
-			tmpMap["FileName"] = e.DataCode
+			tmpMap["FileName"] = "/" + e.DataCode
 			tmpMap["Modify"] = ""
 			resMap = append(resMap, tmpMap)
 		}

@@ -25,10 +25,13 @@ type apiDataOrderShipRepository struct{}
 func (a apiDataOrderShipRepository) GetDataOrderShipListByOrderId(orderIds []interface{}) (r []string) {
 	esClient := esdatasource.GetESClient()
 
+	if orderIds == nil {
+		return
+	}
+
 	boolQ := elastic.NewBoolQuery()
 	if len(orderIds) > 0 {
 		boolQ.Must(elastic.NewTermsQuery("order_id.keyword", orderIds...))
-
 	}
 
 	res, err := esClient.Search(utils.UnMarshal(models.ApiDataInfoOrder{})).

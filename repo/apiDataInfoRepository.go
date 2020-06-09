@@ -7,6 +7,7 @@ import (
 	"MPDCDS_BackendService/utils"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/olivere/elastic/v7"
 	"go.uber.org/zap"
 )
@@ -25,11 +26,18 @@ type apiDataInfoRepository struct{}
 func (a apiDataInfoRepository) GetApiDataInfoById(ids []string) (r []models.ApiDataInfo) {
 	esClient := esdatasource.GetESClient()
 
-	boolQ := elastic.NewBoolQuery()
-	if len(ids) > 0 {
-		boolQ.Filter(elastic.NewIdsQuery("ids_type").Ids(ids...))
+	if ids == nil || len(ids) < 1 {
+		return
 	}
 
+	boolQ := elastic.NewBoolQuery()
+	if len(ids) > 0 {
+		boolQ.Filter(elastic.NewIdsQuery().Ids(ids...))
+	}
+
+	source, _ := boolQ.Source()
+	bytes, _ := json.Marshal(source)
+	fmt.Println("query --> ", string(bytes))
 	res, err := esClient.Search(utils.UnMarshal(models.ApiDataInfo{})).
 		Size(10000).
 		From(0).
