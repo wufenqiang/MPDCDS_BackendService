@@ -22,12 +22,13 @@ func NewApiFileRepository() ApiFileRepository {
 type apiFileRepository struct{}
 
 func (a apiFileRepository) GetFileByIndexNameAndDirId(indexName, dirId string) (r []models.ApiFile) {
+	if indexName == "" || dirId == "" {
+		return
+	}
 	esClient := esdatasource.GetESClient()
 
 	boolQ := elastic.NewBoolQuery()
-	if dirId != "" {
-		boolQ.Must(elastic.NewQueryStringQuery("dir_id:" + dirId))
-	}
+	boolQ.Must(elastic.NewTermQuery("dir_id.keyword", dirId))
 
 	res, err := esClient.Search(indexName).
 		Size(10000).
@@ -37,6 +38,7 @@ func (a apiFileRepository) GetFileByIndexNameAndDirId(indexName, dirId string) (
 
 	if err != nil {
 		logger.GetLogger().Error("GetDirByPath", zap.Error(err))
+		return
 	}
 
 	if res == nil {

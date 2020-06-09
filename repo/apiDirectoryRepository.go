@@ -23,16 +23,21 @@ func NewApiDirectoryRepository() ApiDirectoryRepository {
 type apiDirectoryRepository struct{}
 
 func (a apiDirectoryRepository) GetDirByParentPath(path string) (r []models.ApiDirectory) {
+	if path == "" {
+		return
+	}
 	esClient := esdatasource.GetESClient()
 
-	q := elastic.NewQueryStringQuery("parent_dir:" + path)
+	boolQ := elastic.NewBoolQuery()
+	boolQ.Must(elastic.NewTermQuery("parent_dir.keyword", path))
 	res, err := esClient.Search(utils.UnMarshal(models.ApiDirectory{})).
 		Size(10000).
 		From(0).
-		Query(q).Do(context.Background())
+		Query(boolQ).Do(context.Background())
 
 	if err != nil {
 		logger.GetLogger().Error("GetDirByPath", zap.Error(err))
+		return
 	}
 
 	if res == nil {
@@ -51,16 +56,22 @@ func (a apiDirectoryRepository) GetDirByParentPath(path string) (r []models.ApiD
 }
 
 func (a apiDirectoryRepository) GetDirByCurrentPath(currentPath string) (r models.ApiDirectory) {
+	if currentPath == "" {
+		return
+	}
 	esClient := esdatasource.GetESClient()
 
-	q := elastic.NewQueryStringQuery("current_dir:" + currentPath)
+	boolQ := elastic.NewBoolQuery()
+	boolQ.Must(elastic.NewTermQuery("current_dir.keyword", currentPath))
+
 	res, err := esClient.Search(utils.UnMarshal(models.ApiDirectory{})).
 		Size(1).
 		From(0).
-		Query(q).Do(context.Background())
+		Query(boolQ).Do(context.Background())
 
 	if err != nil {
 		logger.GetLogger().Error("GetDirByPath", zap.Error(err))
+		return
 	}
 
 	if res == nil {

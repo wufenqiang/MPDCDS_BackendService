@@ -62,6 +62,7 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 		apiDirectorys := apiDirectoryRepository.GetDirByParentPath(dirPath)
 		for _, e := range apiDirectorys {
 			var tmpMap map[string]string
+			tmpMap = make(map[string]string)
 			tmpMap["Size"] = "0"
 			tmpMap["Type"] = "dir"
 			tmpMap["FileName"] = e.CurrentDir
@@ -74,6 +75,7 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 		apiFiles := apiFileRepository.GetFileByIndexNameAndDirId(currentDirectory.FileIndexName, utils.AesEcryptStr(currentDirectory.CurrentDir))
 		for _, e := range apiFiles {
 			var tmpMap map[string]string
+			tmpMap = make(map[string]string)
 			tmpMap["Size"] = strconv.FormatInt(e.FileSize, 10)
 			tmpMap["Type"] = "file"
 			tmpMap["FileName"] = e.FileName
