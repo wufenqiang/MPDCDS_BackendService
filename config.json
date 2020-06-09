@@ -15,5 +15,7 @@
 
   "NetworkAddr":"127.0.0.1:19090",
 
+
+
   "ESURL": "http://elastic:weather.com.cn@220.243.130.220:9200"
 }
