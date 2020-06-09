@@ -63,6 +63,7 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 }
 
 func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, pwd string) (r *MPDCDS_BackendService.FileDirInfo, err error) {
+	r = MPDCDS_BackendService.NewFileDirInfo()
 	//验证token是否有效
 	m := make(map[string]string)
 	isValid, err := utils.VerifyToken(m, token)
@@ -73,7 +74,9 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	}
 
 	fileService := service.NewApiFileService()
-	fileService.GetFileByPath(pwd)
+	r.Status = 0
+	r.Data = fileService.GetFileByPath(m["id"], pwd)
+	r.Msg = "get file info success"
 	return
 }
 

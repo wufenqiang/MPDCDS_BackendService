@@ -5,14 +5,14 @@ import (
 	"MPDCDS_BackendService/logger"
 	"MPDCDS_BackendService/models"
 	"context"
+	"encoding/json"
 	"github.com/olivere/elastic/v7"
 	"go.uber.org/zap"
-	"reflect"
 )
 
 type ApiFileRepository interface {
-	//根据目录ID或者接入数据信息表ID获取文件信息
-	GetFileByDirId(apiDirId, apiDataInfoId string) []models.ApiFile
+	//根据索引名和标识查询文件信息
+	GetFileByIndexNameAndDirId(indexName, dirId string) []models.ApiFile
 }
 
 func NewApiFileRepository() ApiFileRepository {
@@ -21,20 +21,18 @@ func NewApiFileRepository() ApiFileRepository {
 
 type apiFileRepository struct{}
 
-func (a apiFileRepository) GetFileByDirId(apiDirId, apiDataInfoId string) []models.ApiFile {
+func (a apiFileRepository) GetFileByIndexNameAndDirId(indexName, dirId string) (r []models.ApiFile) {
 	esClient := esdatasource.GetESClient()
 
 	boolQ := elastic.NewBoolQuery()
-	if apiDirId != "" {
-		boolQ.Must(elastic.NewQueryStringQuery("dir_id:" + apiDirId))
-	}
-	if apiDataInfoId != "" {
-		boolQ.Must(elastic.NewQueryStringQuery("access_id:" + apiDataInfoId))
+	if dirId != "" {
+		boolQ.Must(elastic.NewQueryStringQuery("dir_id:" + dirId))
 	}
 
-	res, err := esClient.Search("api_file").
+	res, err := esClient.Search(indexName).
 		Size(10000).
 		From(0).
+		Sort("create_time", true).
 		Query(boolQ).Do(context.Background())
 
 	if err != nil {
@@ -42,12 +40,15 @@ func (a apiFileRepository) GetFileByDirId(apiDirId, apiDataInfoId string) []mode
 	}
 
 	if res == nil {
-		return []models.ApiFile{}
+		return
 	}
 
-	var apiFiles []models.ApiFile
-	for _, item := range res.Each(reflect.TypeOf(apiFiles)) { //从搜索结果中取数据的方法
-		apiFiles = append(apiFiles, item.(models.ApiFile))
+	for _, item := range res.Hits.Hits {
+		var apiFile models.ApiFile
+		data, _ := item.Source.MarshalJSON()
+		json.Unmarshal(data, &apiFile)
+		apiFile.Id = item.Id
+		r = append(r, apiFile)
 	}
-	return apiFiles
+	return
 }
