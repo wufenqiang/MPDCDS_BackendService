@@ -4,7 +4,7 @@ import "time"
 
 //通知信息表
 type WebNotice struct {
-	//Id         string    `json:"id"`          //系统ID
+	Id         string    `json:"id"`          //系统ID
 	Title      string    `json:"title"`       //标题
 	Details    string    `json:"details"`     //内容
 	UserName   string    `json:"user_name"`   //发送人

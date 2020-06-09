@@ -4,7 +4,7 @@ import "time"
 
 //菜单表
 type WebMenu struct {
-	//Id         string    `json:"id"`          //系统ID
+	Id         string    `json:"id"`          //系统ID
 	MenuName   string    `json:"menu_name"`   //菜单名称
 	AccessUrl  string    `json:"access_url"`  //访问路径
 	Level      int       `json:"level"`       //级别
