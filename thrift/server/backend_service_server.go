@@ -22,8 +22,8 @@ func (this *MPDCDS_BackendServiceImpl) Auth(ctx context.Context, user string, pa
 	//todo 查询es验证用户名和密码是否合法
 	r = MPDCDS_BackendService.NewAuth()
 	esclient := esdatasource.GetESClient()
-	u := elastic.NewQueryStringQuery(user)     //"username:hfcmjt"
-	p := elastic.NewQueryStringQuery(password) //"password:123456789"
+	u := elastic.NewQueryStringQuery("user_name:" + user)    //"username:hfcmjt"
+	p := elastic.NewQueryStringQuery("password:" + password) //"password:123456789"
 	res, err := esclient.Search(utils.UnMarshal(models.WebUser{})).Query(u).Query(p).Do(context.Background())
 	if err != nil {
 		r.Status = -1
