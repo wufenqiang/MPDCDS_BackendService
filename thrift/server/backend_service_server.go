@@ -88,10 +88,11 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	return
 }
 
-func (this *MPDCDS_BackendServiceImpl) VerifyDir(ctx context.Context, token string, abspath string) (r bool, err error) {
+func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string, abspath string) (r *MPDCDS_BackendService.DirAuth, err error) {
 	//todo 判断当前用户是否有权限访问该目录
-
-	return true, nil
+	r = MPDCDS_BackendService.NewDirAuth()
+	r.Status = 1
+	return r, nil
 }
 
 //启动thrift server服务
