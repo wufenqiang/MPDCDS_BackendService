@@ -1,6 +1,7 @@
 package service
 
 import (
+	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/repo"
 	"MPDCDS_BackendService/utils"
 	"strconv"
@@ -13,6 +14,9 @@ type ApiFileService interface {
 
 	//根据用户ID验证路径参数是否合法，即是否有读此目录参数的权限
 	ValidDirByUserOrder(userId, absPath string) (status int16, msg string)
+
+	//根据dirId获取当前文件地址
+	GetFileInfoByAbsDir(absPath, fileName string) (r map[string]string)
 }
 
 func NewApiFileService() ApiFileService {
@@ -141,5 +145,25 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 		return
 	}
 
+	return
+}
+
+func (a apiFileService) GetFileInfoByAbsDir(absPath, fileName string) (r map[string]string) {
+
+	//根据当前目录绝对地址获取从目录表中获取file_index_name
+	apiDirectory := apiDirectoryRepository.GetDirByCurrentPath(absPath)
+	file_index_name := apiDirectory.FileIndexName
+
+	if file_index_name == "" {
+		file_index_name = utils.UnMarshal(models.ApiFile{})
+	}
+	//根据file_index_name从文件信息表查询文件真实地址
+	apiFile := apiFileRepository.GetFileByIndexNameAndDirIdAndFileName(file_index_name, utils.AesEcryptStr(absPath), fileName)
+
+	if apiFile.Id != "" {
+		r = make(map[string]string)
+		r["file_address"] = apiFile.FileAddress
+		return
+	}
 	return
 }

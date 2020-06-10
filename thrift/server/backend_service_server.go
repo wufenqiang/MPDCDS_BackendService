@@ -88,7 +88,7 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 	return
 }
 
-func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string, abspath string) (r *MPDCDS_BackendService.DirAuth, err error) {
+func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string, absPath string) (r *MPDCDS_BackendService.DirAuth, err error) {
 	//todo 判断当前用户是否有权限访问该目录
 	r = MPDCDS_BackendService.NewDirAuth()
 	//验证token是否有效
@@ -98,7 +98,7 @@ func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string
 	//合法
 	userIdLog := zap.String("userId", m["id"])
 	userNameLog := zap.String("username", m["username"])
-	accessPathLog := zap.String("accessPath", abspath)
+	accessPathLog := zap.String("accessPath", absPath)
 	if isValid {
 		logger.GetLogger().Info("user access", userIdLog, userNameLog, accessPathLog)
 	} else {
@@ -109,10 +109,40 @@ func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string
 	}
 
 	apiFileService := service.NewApiFileService()
-	status, msg := apiFileService.ValidDirByUserOrder(m["id"], abspath)
+	status, msg := apiFileService.ValidDirByUserOrder(m["id"], absPath)
 
 	r.Status = status
 	r.Msg = msg
+	return
+}
+
+func (this *MPDCDS_BackendServiceImpl) File(ctx context.Context, token string, absPath string, fileName string) (r *MPDCDS_BackendService.FileInfo, err error) {
+	r = MPDCDS_BackendService.NewFileInfo()
+	//验证token是否有效
+	m := make(map[string]string)
+	isValid, err := utils.VerifyToken(m, token)
+	//合法
+	userIdLog := zap.String("userId", m["id"])
+	userNameLog := zap.String("username", m["username"])
+	accessPathLog := zap.String("accessPath", absPath)
+	if isValid {
+		logger.GetLogger().Info("user access", userIdLog, userNameLog, accessPathLog)
+	} else {
+		r.Status = -1
+		r.Msg = "User authentication failed"
+		logger.GetLogger().Error("User authentication failed", userIdLog, userNameLog, accessPathLog)
+		return
+	}
+
+	apiFileService := service.NewApiFileService()
+	data := apiFileService.GetFileInfoByAbsDir(absPath, fileName)
+	if data == nil {
+		r.Status = -1
+		r.Msg = "file address no exist"
+	} else {
+		r.Status = 0
+		r.Data = data
+	}
 	return
 }
 
