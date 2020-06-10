@@ -33,6 +33,7 @@ func (a apiDataOrderShipRepository) GetDataOrderShipListByOrderId(orderIds []int
 	boolQ.Must(elastic.NewTermsQuery("order_id.keyword", orderIds...))
 
 	res, err := esClient.Search(utils.UnMarshal(models.ApiDataInfoOrder{})).
+		Collapse(elastic.NewCollapseBuilder("access_id.keyword")).
 		Size(10000).
 		From(0).
 		Query(boolQ).Do(context.Background())
