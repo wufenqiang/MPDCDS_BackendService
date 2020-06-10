@@ -91,8 +91,34 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string, abspath string) (r *MPDCDS_BackendService.DirAuth, err error) {
 	//todo 判断当前用户是否有权限访问该目录
 	r = MPDCDS_BackendService.NewDirAuth()
-	r.Status = 1
-	return r, nil
+	//验证token是否有效
+	m := make(map[string]string)
+	isValid, err := utils.VerifyToken(m, token)
+
+	//合法
+	userIdLog := zap.String("userId", m["id"])
+	userNameLog := zap.String("username", m["username"])
+	accessPathLog := zap.String("accessPath", abspath)
+	if isValid {
+		logger.GetLogger().Info("user access", userIdLog, userNameLog, accessPathLog)
+	} else {
+		r.Status = -1
+		r.Msg = "User authentication failed"
+		logger.GetLogger().Error("User authentication failed", userIdLog, userNameLog, accessPathLog)
+		return
+	}
+
+	apiFileService := service.NewApiFileService()
+	validRes := apiFileService.ValidDirByUserOrder(m["id"], abspath)
+
+	if validRes {
+		r.Status = 0
+		r.Msg = "User directory permission verification passed"
+	} else {
+		r.Status = 101
+		r.Msg = "Current directory user does not have permission"
+	}
+	return
 }
 
 //启动thrift server服务

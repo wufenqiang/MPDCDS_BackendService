@@ -39,6 +39,7 @@ func (a apiDataOrderShipRepository) GetDataOrderShipListByOrderId(orderIds []int
 
 	if err != nil {
 		logger.GetLogger().Error("GetDataOrderShipListByOrderId", zap.Error(err))
+		return
 	}
 
 	if res == nil {

@@ -4,10 +4,15 @@ import (
 	"MPDCDS_BackendService/repo"
 	"MPDCDS_BackendService/utils"
 	"strconv"
+	"strings"
 )
 
 type ApiFileService interface {
+	//根据用户ID和路径获取目录下子目录或者文件的列表信息
 	GetFileByPath(userId, dirPath string) (resMap []map[string]string)
+
+	//根据用户ID验证路径参数是否合法，即是否有读此目录参数的权限
+	ValidDirByUserOrder(userId, absPath string) bool
 }
 
 func NewApiFileService() ApiFileService {
@@ -24,6 +29,40 @@ var (
 	apiDataOrderShipRepository = repo.NewApiDataOrderShipRepository()
 	apiDataInfoRepository      = repo.NewApiDataInfoRepository()
 )
+
+func (a apiFileService) ValidDirByUserOrder(userId, absPath string) (r bool) {
+
+	if absPath == "" {
+		return
+	}
+
+	if absPath == "/" {
+		return true
+	}
+
+	//根据UserId获取该用户已被授权并且有效的订单
+	apiOrders := apiOrderRepository.GetOrderByUserId(userId)
+
+	var orderIds []interface{}
+	for _, e := range apiOrders {
+		orderIds = append(orderIds, e.Id)
+	}
+
+	//根据订单ID获取数据类型ID
+	accessIds := apiDataOrderShipRepository.GetDataOrderShipListByOrderId(orderIds)
+
+	//根据ID获取数据类型
+	apiDataInfos := apiDataInfoRepository.GetApiDataInfoById(accessIds)
+
+	split := strings.Split(absPath, "/")
+	s := split[1]
+	for _, e := range apiDataInfos {
+		if e.DataCode == s {
+			return true
+		}
+	}
+	return
+}
 
 func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[string]string) {
 
