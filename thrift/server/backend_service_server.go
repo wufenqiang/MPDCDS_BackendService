@@ -91,7 +91,7 @@ func (this *MPDCDS_BackendServiceImpl) Lists(ctx context.Context, token string, 
 func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string, abspath string) (r *MPDCDS_BackendService.DirAuth, err error) {
 	//todo 判断当前用户是否有权限访问该目录
 	r = MPDCDS_BackendService.NewDirAuth()
-	r.Status = 1
+	r.Status = 0
 	return r, nil
 }
 
