@@ -109,15 +109,10 @@ func (this *MPDCDS_BackendServiceImpl) DirAuth(ctx context.Context, token string
 	}
 
 	apiFileService := service.NewApiFileService()
-	validRes := apiFileService.ValidDirByUserOrder(m["id"], abspath)
+	status, msg := apiFileService.ValidDirByUserOrder(m["id"], abspath)
 
-	if validRes {
-		r.Status = 0
-		r.Msg = "User directory permission verification passed"
-	} else {
-		r.Status = 101
-		r.Msg = "Current directory user does not have permission"
-	}
+	r.Status = status
+	r.Msg = msg
 	return
 }
 

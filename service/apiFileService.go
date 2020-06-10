@@ -12,7 +12,7 @@ type ApiFileService interface {
 	GetFileByPath(userId, dirPath string) (resMap []map[string]string)
 
 	//根据用户ID验证路径参数是否合法，即是否有读此目录参数的权限
-	ValidDirByUserOrder(userId, absPath string) bool
+	ValidDirByUserOrder(userId, absPath string) (status int16, msg string)
 }
 
 func NewApiFileService() ApiFileService {
@@ -30,14 +30,26 @@ var (
 	apiDataInfoRepository      = repo.NewApiDataInfoRepository()
 )
 
-func (a apiFileService) ValidDirByUserOrder(userId, absPath string) (r bool) {
+func (a apiFileService) ValidDirByUserOrder(userId, absPath string) (status int16, msg string) {
 
 	if absPath == "" {
+		status = 101
+		msg = "Parameter cannot be empty"
 		return
 	}
 
 	if absPath == "/" {
-		return true
+		status = 0
+		msg = "Path validation successful"
+		return
+	}
+
+	//根据参数路径查询当前目录信息，判断是否为末级目录（file_index_name有值则为末级目录）
+	currentDirectory := apiDirectoryRepository.GetDirByCurrentPath(absPath)
+	if currentDirectory.Id == "" {
+		status = 102
+		msg = "failed: CreateFile " + absPath + ": The system cannot find the file specified."
+		return
 	}
 
 	//根据UserId获取该用户已被授权并且有效的订单
@@ -58,9 +70,14 @@ func (a apiFileService) ValidDirByUserOrder(userId, absPath string) (r bool) {
 	s := split[1]
 	for _, e := range apiDataInfos {
 		if e.DataCode == s {
-			return true
+			status = 0
+			msg = "Path validation successful"
+			return
 		}
 	}
+
+	status = 103
+	msg = "Path validation Failed"
 	return
 }
 
