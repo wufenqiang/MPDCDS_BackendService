@@ -12,6 +12,6 @@ type ApiFile struct {
 	DirId       string    `json:"dir_id"`       //根据最小目录地址生成唯一标识
 	FileAddress string    `json:"file_address"` //文件地址  本地地址（file:///） http://ip:port/xxxx
 	CollectTime time.Time `json:"collect_time"` //采集时间
-	UpdateTime  time.Time `json:"updatetime"`   //更新时间
+	UpdateTime  time.Time `json:"update_time"`  //更新时间
 	Status      string    `json:"status"`       //0可用
 }
