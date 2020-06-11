@@ -150,7 +150,7 @@ func (a apiFileService) GetFileByPath(userId, dirPath string) (resMap []map[stri
 
 func (a apiFileService) GetFileInfoByAbsDir(absPath, fileName string) (r map[string]string) {
 
-	//根据当前目录绝对地址获取从目录表中获取file_index_name
+	//根据当前目录绝对地址从目录表中获取file_index_name
 	apiDirectory := apiDirectoryRepository.GetDirByCurrentPath(absPath)
 	file_index_name := apiDirectory.FileIndexName
 
