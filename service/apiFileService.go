@@ -159,10 +159,11 @@ func (a apiFileService) GetFileInfoByAbsDir(absPath, fileName string) (r map[str
 	}
 	//根据file_index_name从文件信息表查询文件真实地址
 	apiFile := apiFileRepository.GetFileByIndexNameAndDirIdAndFileName(file_index_name, utils.AesEcryptStr(absPath), fileName)
-
 	if apiFile.Id != "" {
 		r = make(map[string]string)
 		r["file_address"] = apiFile.FileAddress
+		r["access_id"] = apiFile.AccessId
+		r["file_id"] = apiFile.Id
 		return
 	}
 	return
