@@ -20,7 +20,7 @@ type ApiFileService interface {
 	GetFileInfoByAbsDir(absPath, fileName string) (r map[string]string)
 
 	//保存下载数据文件信息
-	SaveDownFileInfo(apidown *MPDCDS_BackendService.ApiDown, userId string) (id string, error error)
+	SaveDownLoadFileInfo(apiDownLoad *MPDCDS_BackendService.ApiDownLoad, userId string) (id string, error error)
 }
 
 func NewApiFileService() ApiFileService {
@@ -174,7 +174,7 @@ func (a apiFileService) GetFileInfoByAbsDir(absPath, fileName string) (r map[str
 	return
 }
 
-func (a apiFileService) SaveDownFileInfo(apidown *MPDCDS_BackendService.ApiDown, userId string) (id string, error error) {
-	id, err := apiDownRepository.SaveDownFileInfo(apidown, userId)
+func (a apiFileService) SaveDownLoadFileInfo(apiDownLoad *MPDCDS_BackendService.ApiDownLoad, userId string) (id string, error error) {
+	id, err := apiDownRepository.SaveDownLoadFileInfo(apiDownLoad, userId)
 	return id, err
 }

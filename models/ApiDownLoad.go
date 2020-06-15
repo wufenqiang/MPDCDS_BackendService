@@ -3,7 +3,7 @@ package models
 import "time"
 
 //文件下载信息记录表
-type ApiDown struct {
+type ApiDownload struct {
 	Id         string    `json:"-"`           //系统ID
 	AccessId   string    `json:"access_id"`   //接入数据信息表主键
 	FileId     string    `json:"file_id"`     //文件信息表主键

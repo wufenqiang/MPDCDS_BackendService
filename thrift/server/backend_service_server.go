@@ -148,7 +148,7 @@ func (this *MPDCDS_BackendServiceImpl) File(ctx context.Context, token string, a
 	return
 }
 
-func (this *MPDCDS_BackendServiceImpl) SaveDownFileInfo(ctx context.Context, token string, apidown *MPDCDS_BackendService.ApiDown) (r *MPDCDS_BackendService.Result_, err error) {
+func (this *MPDCDS_BackendServiceImpl) SaveDownLoadFileInfo(ctx context.Context, token string, apiDownLoad *MPDCDS_BackendService.ApiDownLoad) (r *MPDCDS_BackendService.Result_, err error) {
 	//验证token是否有效
 	m := make(map[string]string)
 	isValid, err := utils.VerifyToken(m, token)
@@ -165,7 +165,7 @@ func (this *MPDCDS_BackendServiceImpl) SaveDownFileInfo(ctx context.Context, tok
 		return
 	}
 	apiFileService := service.NewApiFileService()
-	id, err := apiFileService.SaveDownFileInfo(apidown, userId)
+	id, err := apiFileService.SaveDownLoadFileInfo(apiDownLoad, userId)
 
 	if err != nil {
 		logger.GetLogger().Error("SaveDownFileInfo failed", zap.String("SaveDownFileInfo", err.Error()))
