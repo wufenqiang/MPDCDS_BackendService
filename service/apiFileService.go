@@ -3,6 +3,7 @@ package service
 import (
 	"MPDCDS_BackendService/models"
 	"MPDCDS_BackendService/repo"
+	"MPDCDS_BackendService/thrift/MPDCDS_BackendService"
 	"MPDCDS_BackendService/utils"
 	"strconv"
 	"strings"
@@ -17,6 +18,9 @@ type ApiFileService interface {
 
 	//根据dirId获取当前文件地址
 	GetFileInfoByAbsDir(absPath, fileName string) (r map[string]string)
+
+	//保存下载数据文件信息
+	SaveDownFileInfo(apidown *MPDCDS_BackendService.ApiDown, userId string) (id string, error error)
 }
 
 func NewApiFileService() ApiFileService {
@@ -32,6 +36,7 @@ var (
 	apiOrderRepository         = repo.NewApiOrderRepository()
 	apiDataOrderShipRepository = repo.NewApiDataOrderShipRepository()
 	apiDataInfoRepository      = repo.NewApiDataInfoRepository()
+	apiDownRepository          = repo.NewApiDownRepository()
 )
 
 func (a apiFileService) ValidDirByUserOrder(userId, absPath string) (status int16, msg string) {
@@ -167,4 +172,9 @@ func (a apiFileService) GetFileInfoByAbsDir(absPath, fileName string) (r map[str
 		return
 	}
 	return
+}
+
+func (a apiFileService) SaveDownFileInfo(apidown *MPDCDS_BackendService.ApiDown, userId string) (id string, error error) {
+	id, err := apiDownRepository.SaveDownFileInfo(apidown, userId)
+	return id, err
 }

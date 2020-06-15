@@ -138,10 +138,45 @@ func (this *MPDCDS_BackendServiceImpl) File(ctx context.Context, token string, a
 	data := apiFileService.GetFileInfoByAbsDir(absPath, fileName)
 	if data == nil {
 		r.Status = -1
-		r.Msg = "file address no exist"
+		r.Msg = "File address no exist"
 	} else {
 		r.Status = 0
+		//设置用户信息表userId
+
 		r.Data = data
+	}
+	return
+}
+
+func (this *MPDCDS_BackendServiceImpl) SaveDownFileInfo(ctx context.Context, token string, apidown *MPDCDS_BackendService.ApiDown) (r *MPDCDS_BackendService.Result_, err error) {
+	//验证token是否有效
+	m := make(map[string]string)
+	isValid, err := utils.VerifyToken(m, token)
+	//合法
+	userId := m["id"]
+	userIdLog := zap.String("userId", userId)
+	userNameLog := zap.String("username", m["username"])
+	if isValid {
+		logger.GetLogger().Info("user access", userIdLog, userNameLog)
+	} else {
+		r.Status = -1
+		r.Msg = "User authentication failed"
+		logger.GetLogger().Error("User authentication failed", userIdLog, userNameLog)
+		return
+	}
+	apiFileService := service.NewApiFileService()
+	id, err := apiFileService.SaveDownFileInfo(apidown, userId)
+
+	if err != nil {
+		logger.GetLogger().Error("SaveDownFileInfo failed", zap.String("SaveDownFileInfo", err.Error()))
+		return
+	}
+	r = MPDCDS_BackendService.NewResult_()
+	if id != "" {
+		r.Status = 0
+	} else {
+		r.Status = -1
+		r.Msg = "SaveDownFileInfo failed"
 	}
 	return
 }
