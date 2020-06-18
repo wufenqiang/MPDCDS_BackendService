@@ -20,6 +20,8 @@ func init() {
 }
 
 type sysconfig struct {
+	ProjectName string `json:"ProjectName"`
+
 	//端口
 	Port string `json:"Port"`
 

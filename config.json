@@ -1,9 +1,11 @@
 {
+  "ProjectName": "MPDCDS_BackendService",
+
 
   "Port": "8848",
 
 
-  "LoggerPath": "D:/tmp/logs/go/goserver-api/",
+  "LoggerPath": "D:/tmp/logs/go/",
   "LoggerLevel": "info",
 
   "ThriftHost":"127.0.0.1",
