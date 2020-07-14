@@ -19,10 +19,10 @@ type ApiDataInfo struct {
 	DataType       string    `json:"data_type"`       //数据类型（0文件、1数据）
 	Feature        string    `json:"feature"`         //要素信息
 	IsOpen         string    `json:"is_open"`         //是否开放（对外提供 0是、1否  用户是否可见）
-	ValidTime      int       `json:"value_time"`      //数据保留时间（天）
+	ValidTime      int       `json:"valid_time"`      //数据保留时间（天）
 	Admode         string    `json:"admode"`          //采集方式
 	LinkMan        string    `json:"link_man"`        //联系人
 	AccessStatus   string    `json:"access_status"`   //上游数据接入状态（1未接入、2试运行、3已稳定   判断上游接入数据是否稳定）
-	DataLevel      string    `json:"DataLevel"`       //数据级别（1 2 3   3级不需要审批）
+	DataLevel      string    `json:"data_level"`      //数据级别（1 2 3   3级不需要审批）
 	FileIndexName  string    `json:"file_index_name"` //文件索引名称(api_file_类型)
 }
