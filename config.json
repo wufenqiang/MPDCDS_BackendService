@@ -1,17 +1,18 @@
 {
-  "ProjectName": "MPDCDS_BackendService",
 
+  "HttpsPort": "8848",
 
-  "Port": "8848",
-
-
-  "LoggerPath": "D:/tmp/logs/go/",
   "LoggerLevel": "info",
 
   "ThriftHost":"127.0.0.1",
   "ThriftPort": "19090",
 
 
+  "ESURL": "http://elastic:weather.com.cn@220.243.130.220:9200",
 
-  "ESURL": "http://elastic:weather.com.cn@220.243.130.220:9200"
+  "MySQLIp":"220.243.129.248",
+  "MySQLPort":"3306",
+  "MySQLDBName":"ry_vue",
+  "MySQLUserName":"ry_vue_u",
+  "MySQLPassWord":"123456"
 }
